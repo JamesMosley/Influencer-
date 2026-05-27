@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "react-styleguidist": "^13.1.4"
+  },
+  "devDependencies": {
+    "@types/react-dom": "^19.2.3"
   }
 }
