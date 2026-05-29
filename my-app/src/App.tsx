@@ -1,24 +1,8 @@
 import './App.css';
+import { CampaignListPage } from './CampaignList';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code><source />
-          <span className="tsx"></span></code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  return <CampaignListPage />;
 }
 
 export default App;
