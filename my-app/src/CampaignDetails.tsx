@@ -39,3 +39,12 @@ const statusClassMap: Record<CampaignStatus, string> = {
   Paused: 'status-pill status-paused',
   Completed: 'status-pill status-completed',
 };
+const fmtBudget = (n: number) => '$' + n.toLocaleString();
+const fmtDate = (d: Date) =>
+    d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+export const CampaignDetails: React.FC = () => {
+    const [campaign] = useState<CampaignDetail>(MK_CAMPAIGN_DETAIL);
+    const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+    const [submissionNote, setSubmissionNote] = useState('');
+    const [isSubmitted, setIsSubmitted] = useState(false);
+};
