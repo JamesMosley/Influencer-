@@ -1,0 +1,420 @@
+/* ==========================================================================
+   Campaign Details Page Presentation Styling
+   ========================================================================== */
+
+/* Page Header Navigation Layout */
+.details-navigation {
+  margin-bottom: 1.5rem;
+}
+
+.back-link {
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.15s ease;
+}
+
+.back-link:hover {
+  color: var(--color-active);
+}
+
+/* Hero Section Extension */
+.details-hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-bottom: 2rem;
+  border-b: 1px solid var(--color-border);
+  margin-bottom: 2.5rem;
+}
+
+@media (min-width: 992px) {
+  .details-hero {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.hero-main-info {
+  flex-grow: 1;
+  max-width: 720px;
+}
+
+.hero-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.meta-divider {
+  color: var(--color-text-muted);
+}
+
+.hero-platform-tag {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.details-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin: 0 0 1rem 0;
+  line-height: 1.15;
+}
+
+.details-lead {
+  font-size: 1.15rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Strategic Quick Specs Layout */
+.details-quick-specs {
+  display: flex;
+  gap: 1.5rem;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  padding: 1.5rem;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  align-self: flex-start;
+}
+
+.spec-item {
+  display: flex;
+  flex-direction: column;
+  min-width: 130px;
+}
+
+.spec-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.spec-value {
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.spec-value.text-accent {
+  color: var(--color-text-primary);
+}
+
+/* Content Grid Columns Splits */
+.details-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+
+@media (min-width: 992px) {
+  .details-grid-layout {
+    grid-template-columns: 1.4fr 1fr;
+  }
+}
+
+/* Left Content Blocks Structure */
+.content-block {
+  margin-bottom: 2.5rem;
+}
+
+.section-heading {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 1.25rem 0;
+  border-bottom: 2px solid var(--color-border);
+  padding-bottom: 0.5rem;
+}
+
+.context-card {
+  background: #f1f5f9;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  font-size: 0.95rem;
+}
+
+/* Functional Instruction List */
+.instruction-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.instruction-item {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+
+.step-number {
+  background: #1e293b;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.step-text {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+/* Deliverable Matrix */
+.deliverables-box {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 0.5rem 1.25rem;
+}
+
+.deliverable-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.deliverable-row:not(:last-child) {
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.deliverable-check {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-completed);
+  cursor: default;
+}
+
+/* Sidebar Submissions Elements Styling */
+.submission-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+  position: sticky;
+  top: 2rem;
+}
+
+.submission-card-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+}
+
+.submission-card-subtitle {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  margin: 0 0 1.5rem 0;
+  line-height: 1.4;
+}
+
+/* File Upload System Design */
+.upload-dropzone {
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 2rem 1rem;
+  text-align: center;
+  background: #f8fafc;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+}
+
+.upload-dropzone:hover {
+  border-color: var(--color-active);
+  background-color: #f0f9ff;
+}
+
+.hidden-file-input {
+  display: none;
+}
+
+.upload-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.upload-icon {
+  font-size: 2rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.upload-prompt {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.upload-formats {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+/* Staged Staging File Tree Preview */
+.file-preview-list {
+  background: #f8fafc;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.queue-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  margin: 0 0 0.75rem 0;
+  letter-spacing: 0.02em;
+}
+
+.file-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  padding: 0.4rem 0;
+}
+
+.file-row:not(:last-child) {
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.file-name {
+  color: var(--color-text-primary);
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 200px;
+}
+
+.file-size {
+  color: var(--color-text-muted);
+}
+
+/* Control Components Base Form Hooks */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-active);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+}
+
+/* Action Event Buttons State Handling */
+.btn-primary-action {
+  width: 100%;
+  background: #1e293b;
+  color: #fff;
+  border: none;
+  padding: 0.9rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.btn-primary-action:hover:not(:disabled) {
+  background: #0f172a;
+}
+
+.btn-primary-action:disabled {
+  background: #cbd5e1;
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+/* Form Process State Success Screen Handling */
+.submission-success {
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
+.success-icon {
+  width: 56px;
+  height: 56px;
+  background: var(--color-completed-bg);
+  color: var(--color-completed);
+  border-radius: 50%;
+  font-size: 1.75rem;
+  font-weight: bold;
+  line-height: 56px;
+  margin: 0 auto 1.25rem auto;
+}
+
+.submission-success h4 {
+  font-size: 1.15rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+}
+
+.success-text {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin: 0 0 1.5rem 0;
+}
+
+.btn-secondary-outline {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  padding: 0.6rem 1.25rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-secondary-outline:hover {
+  background: #f8fafc;
+  color: var(--color-text-primary);
+}
