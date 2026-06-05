@@ -48,3 +48,9 @@ export const CampaignDetails: React.FC = () => {
     const [submissionNote, setSubmissionNote] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
 };
+// Simple file handler simulation
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setUploadedFiles(Array.from(e.target.files));
+    }
+  };
