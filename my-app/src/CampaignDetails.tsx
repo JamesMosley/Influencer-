@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Campaign, CampaignStatus } from './types';
+import { Campaign, CampaignStatus } from './CampaignList';
 import './CampaignDetails.css';
 interface CampaignDetail extends Campaign{
   platform: string;
@@ -43,26 +43,27 @@ const fmtBudget = (n: number) => '$' + n.toLocaleString();
 const fmtDate = (d: Date) =>
     d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 export const CampaignDetails: React.FC = () => {
-    const [campaign] = useState<CampaignDetail>(MK_CAMPAIGN_DETAIL);
-    const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-    const [submissionNote, setSubmissionNote] = useState('');
+    const [campaign] = useState<CampaignDetail>(MocK_CAMPAIGN_DETAIL);
+    const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+    const [submissionNotes, setSubmissionNotes] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
-};
-// Simple file handler simulation
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setUploadedFiles(Array.from(e.target.files));
-    }
-  };
-  const handleFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (uploadedFiles.length === 0) return;
-    
-    // Simulate API push
-    setIsSubmitted(true);
-  };
 
-  return (
+    // Simple file handler simulation
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files) {
+        setUploadedFiles(Array.from(e.target.files));
+      }
+    };
+
+    const handleFormSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      if (uploadedFiles.length === 0) return;
+      
+      // Simulate API push
+      setIsSubmitted(true);
+    };
+
+    return (
     <div className="campaign-page">
       <div className="campaign-shell">
         
@@ -213,5 +214,5 @@ export const CampaignDetails: React.FC = () => {
 
       </div>
     </div>
-  );
+    );
 };
