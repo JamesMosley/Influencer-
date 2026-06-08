@@ -1,5 +1,5 @@
 ﻿import React, { useState } from 'react';
-
+import { Link } from 'react-router-dom';
 export type CampaignStatus = 'Active' | 'Paused' | 'Completed';
 
 export interface Campaign {
@@ -132,27 +132,34 @@ export const CampaignListPage: React.FC = () => {
               const urgent = isUrgent(campaign.deadline) && campaign.status === 'Active';
 
               return (
-                <article key={campaign.id} className="campaign-card">
-                  <div className={accentClassMap[campaign.status]} />
-                  <div className="campaign-card-body">
-                    <div className="campaign-card-top">
-                      <span className={statusClassMap[campaign.status]}>{campaign.status}</span>
-                      <span className="campaign-budget">{fmtBudget(campaign.budget)}</span>
+                <Link 
+                  to={`/campaign/${campaign.id}`} 
+                  key={campaign.id} 
+                  className="campaign-card-link"
+                  style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}
+                >
+                  <article className="campaign-card">
+                    <div className={accentClassMap[campaign.status]} />
+                    <div className="campaign-card-body">
+                      <div className="campaign-card-top">
+                        <span className={statusClassMap[campaign.status]}>{campaign.status}</span>
+                        <span className="campaign-budget">{fmtBudget(campaign.budget)}</span>
+                      </div>
+
+                      <div>
+                        <h2 className="campaign-title">{campaign.name}</h2>
+                        <p className="campaign-description">{campaign.description}</p>
+                      </div>
                     </div>
 
-                    <div>
-                      <h2 className="campaign-title">{campaign.name}</h2>
-                      <p className="campaign-description">{campaign.description}</p>
+                    <div className="campaign-card-footer">
+                      <span className="deadline-label">Deadline</span>
+                      <span className={`campaign-deadline ${urgent ? 'urgent' : ''}`}>
+                        {fmtDate(campaign.deadline)}{urgent ? ' · urgent' : ''}
+                      </span>
                     </div>
-                  </div>
-
-                  <div className="campaign-card-footer">
-                    <span className="deadline-label">Deadline</span>
-                    <span className={`campaign-deadline ${urgent ? 'urgent' : ''}`}>
-                      {fmtDate(campaign.deadline)}{urgent ? ' · urgent' : ''}
-                    </span>
-                  </div>
-                </article>
+                  </article>
+                </Link>
               );
             })}
           </div>
