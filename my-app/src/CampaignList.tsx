@@ -9,6 +9,19 @@ export interface Campaign {
   status: CampaignStatus;
   deadline: Date;
   budget: number;
+  posts?: Post[];
+}
+
+export interface Post {
+  id: string;
+  date: Date;
+  platform?: string;
+  caption?: string;
+  engagements: {
+    likes: number;
+    shares: number;
+    comments: number;
+  };
 }
 
 const INITIAL_CAMPAIGNS: Campaign[] = [
@@ -19,6 +32,22 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
     status: 'Active',
     deadline: new Date('2026-07-15'),
     budget: 5000,
+    posts: [
+      {
+        id: 'p1',
+        date: new Date('2026-06-01'),
+        platform: 'Instagram',
+        caption: 'Sneak peek!',
+        engagements: { likes: 1200, shares: 45, comments: 80 },
+      },
+      {
+        id: 'p2',
+        date: new Date('2026-06-05'),
+        platform: 'TikTok',
+        caption: 'Launch teaser',
+        engagements: { likes: 4200, shares: 210, comments: 340 },
+      },
+    ],
   },
   {
     id: '2',
@@ -27,6 +56,15 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
     status: 'Paused',
     deadline: new Date('2026-06-30'),
     budget: 2500,
+    posts: [
+      {
+        id: 'p3',
+        date: new Date('2026-05-20'),
+        platform: 'Facebook',
+        caption: 'Retargeting ad',
+        engagements: { likes: 300, shares: 12, comments: 6 },
+      },
+    ],
   },
   {
     id: '3',
@@ -35,6 +73,15 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
     status: 'Completed',
     deadline: new Date('2025-12-24'),
     budget: 12000,
+    posts: [
+      {
+        id: 'p4',
+        date: new Date('2025-11-15'),
+        platform: 'Email',
+        caption: 'Holiday sneak',
+        engagements: { likes: 0, shares: 0, comments: 0 },
+      },
+    ],
   },
 ];
 
@@ -67,6 +114,27 @@ export const CampaignListPage: React.FC = () => {
   const activeCount = campaigns.filter((campaign) => campaign.status === 'Active').length;
   const pausedCount = campaigns.filter((campaign) => campaign.status === 'Paused').length;
   const totalBudget = campaigns.reduce((sum, campaign) => sum + campaign.budget, 0);
+  const totalPosts = campaigns.reduce((sum, c) => sum + (c.posts ? c.posts.length : 0), 0);
+
+  const sumEngagements = (posts?: Post[]) => {
+    if (!posts || posts.length === 0) return { likes: 0, shares: 0, comments: 0 };
+    return posts.reduce(
+      (acc, p) => ({
+        likes: acc.likes + p.engagements.likes,
+        shares: acc.shares + p.engagements.shares,
+        comments: acc.comments + p.engagements.comments,
+      }),
+      { likes: 0, shares: 0, comments: 0 }
+    );
+  };
+
+  const overallEngagement = campaigns.reduce(
+    (acc, c) => {
+      const s = sumEngagements(c.posts);
+      return { likes: acc.likes + s.likes, shares: acc.shares + s.shares, comments: acc.comments + s.comments };
+    },
+    { likes: 0, shares: 0, comments: 0 }
+  );
 
   return (
     <div className="campaign-page">
@@ -98,7 +166,9 @@ export const CampaignListPage: React.FC = () => {
             {[
               { label: 'Total campaigns', value: campaigns.length, sub: 'All statuses' },
               { label: 'Active on deck', value: activeCount, sub: `${pausedCount} paused` },
+              { label: 'Total posts', value: totalPosts, sub: 'Submitted across campaigns' },
               { label: 'Total budget', value: fmtBudget(totalBudget), sub: 'Across initiatives' },
+              { label: 'Est. engagements', value: `${overallEngagement.likes.toLocaleString()} ❤ • ${overallEngagement.shares.toLocaleString()} ↻ • ${overallEngagement.comments.toLocaleString()} 💬`, sub: 'Likes • Shares • Comments' },
             ].map((stat) => (
               <div key={stat.label} className="stats-card">
                 <p className="stats-label">{stat.label}</p>
@@ -130,6 +200,9 @@ export const CampaignListPage: React.FC = () => {
           <div className="cards-grid">
             {filtered.map((campaign) => {
               const urgent = isUrgent(campaign.deadline) && campaign.status === 'Active';
+              const postCount = campaign.posts ? campaign.posts.length : 0;
+              const engagementSummary = sumEngagements(campaign.posts);
+              const recentPost = campaign.posts && campaign.posts.length > 0 ? campaign.posts.reduce((a, b) => (a.date > b.date ? a : b)) : null;
 
               return (
                 <Link 
@@ -149,6 +222,13 @@ export const CampaignListPage: React.FC = () => {
                       <div>
                         <h2 className="campaign-title">{campaign.name}</h2>
                         <p className="campaign-description">{campaign.description}</p>
+                        <div className="campaign-post-metrics">
+                          <small className="post-count">Posts: {postCount}</small>
+                          {recentPost && (
+                            <small className="recent-post">Last: {fmtDate(recentPost.date)}</small>
+                          )}
+                          <small className="engagement-summary">Est: {engagementSummary.likes} ❤ • {engagementSummary.shares} ↻ • {engagementSummary.comments} 💬</small>
+                        </div>
                       </div>
                     </div>
 
