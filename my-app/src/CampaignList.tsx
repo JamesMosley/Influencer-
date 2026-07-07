@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 export type CampaignStatus = 'Active' | 'Paused' | 'Completed';
 
@@ -23,6 +23,17 @@ export interface Post {
     comments: number;
   };
 }
+
+const normalizePost = (post: any): Post => ({
+  ...post,
+  date: new Date(post.date),
+});
+
+const normalizeCampaign = (campaign: any): Campaign => ({
+  ...campaign,
+  deadline: new Date(campaign.deadline),
+  posts: campaign.posts?.map(normalizePost),
+});
 
 const INITIAL_CAMPAIGNS: Campaign[] = [
   {
@@ -107,8 +118,38 @@ const fmtDate = (d: Date) =>
   d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
 export const CampaignListPage: React.FC = () => {
-  const [campaigns] = useState<Campaign[]>(INITIAL_CAMPAIGNS);
+  const [campaigns, setCampaigns] = useState<Campaign[]>(INITIAL_CAMPAIGNS);
   const [filter, setFilter] = useState<CampaignStatus | 'All'>('All');
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [fetchError, setFetchError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadJoinedCampaigns = async () => {
+      setIsLoading(true);
+      setFetchError(null);
+
+      try {
+        const response = await fetch('/api/influencer/joined-campaigns/', {
+          credentials: 'include',
+          headers: { 'Accept': 'application/json' },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to load campaigns: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        const campaignsFromApi = Array.isArray(data) ? data.map(normalizeCampaign) : [];
+        setCampaigns(campaignsFromApi);
+      } catch (error) {
+        setFetchError(error instanceof Error ? error.message : 'Unable to load joined campaigns.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadJoinedCampaigns();
+  }, []);
 
   const filtered = campaigns.filter((campaign) => filter === 'All' || campaign.status === filter);
   const activeCount = campaigns.filter((campaign) => campaign.status === 'Active').length;
@@ -159,6 +200,12 @@ export const CampaignListPage: React.FC = () => {
               <p className="snapshot-value">{fmtBudget(totalBudget)}</p>
             </div>
           </div>
+          {isLoading && (
+            <div className="loading-state">Loading joined campaigns...</div>
+          )}
+          {fetchError && (
+            <div className="error-state">Unable to load campaigns: {fetchError}</div>
+          )}
         </section>
 
         <div className="campaign-controls">
